@@ -1,0 +1,24 @@
+AllCops:
+  TargetRubyVersion: 2.1
+  Exclude:
+    - bin/**/*
+
+Style/Documentation:
+  # Checking it by yard
+  Enabled: false
+
+Style/GuardClause:
+  # Use if..else..end prior to guard clauses, except else branch is equal to
+  #   `return value`, and it is the only condition in logical block
+  Enabled: false
+
+Style/RaiseArgs:
+  # Wait a day, when raise(Class, *args) would call raise Class.new(*args),
+  #   then obey this rule
+  Enabled: false
+
+Style/NumericLiterals:
+  # Do not use numeric literals with a random garbage, which should never
+  #   be red
+  Exclude:
+    - spec/**/*

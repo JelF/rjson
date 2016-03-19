@@ -9,7 +9,7 @@ describe RJSON::Parser do
   end
 
   it 'proxies yaml errors' do
-    original_error = StandardError.new("original message")
+    original_error = StandardError.new('original message')
     data = double(:data)
     expect(YAML).to receive(:load).with(data).and_raise(original_error)
 
@@ -17,7 +17,7 @@ describe RJSON::Parser do
       parse(data, true)
     rescue => e
       expect(e).to be_a(RJSON::YAMLParserError)
-      expect(e.message).to eq "original message"
+      expect(e.message).to eq 'original message'
       expect(e.original_error).to eq original_error
     else
       raise 'no error throwed'
@@ -47,6 +47,12 @@ describe RJSON::Parser do
       expect_parse('%:foo').to eq ':foo'
       expect_parse('%%foo').to eq '%foo'
     end
+
+    it "reads json data from string, starting with '!'" do
+      expect_parse('!"foo"').to eq 'foo'
+      expect_parse('!":foo"').to eq :foo
+      expect_parse('!{"foo": "bar"}').to eq('foo' => 'bar')
+    end
   end
 
   it 'converts arrays contents' do
@@ -55,25 +61,24 @@ describe RJSON::Parser do
 
   describe 'hashes' do
     it 'converts keys' do
-      expect_parse(":foo" => true, "%:bar" => false)
-        .to eq(foo: true, ":bar" => false)
+      expect_parse(':foo' => true, '%:bar' => false)
+        .to eq(foo: true, ':bar' => false)
     end
 
     it 'converts values' do
-      expect_parse("foo" => { "bar" => 123})
-        .to eq("foo" => { "bar" => 123})
+      expect_parse('foo' => { 'bar' => 123 })
+        .to eq('foo' => { 'bar' => 123 })
     end
 
     it 'allows private namespace strings to be keys, if they are prefixed' do
-      expect_parse("%__rjson_builder" => nil).to eq("__rjson_builder" => nil)
-      expect_parse(":__rjson_builder" => nil).to eq(__rjson_builder: nil)
+      expect_parse('%__rjson_builder' => nil).to eq('__rjson_builder' => nil)
+      expect_parse(':__rjson_builder' => nil).to eq(__rjson_builder: nil)
     end
 
     it 'raises error, if unprefixed private namespace string is a key, but ' \
        'no builder specified' do
-
       begin
-        parse("__rjson_foo" => "bar")
+        parse('__rjson_foo' => 'bar')
       rescue => e
         expect(e).to be_a(RJSON::PrivateKeysNotUsed)
         expect(e.message)
@@ -108,6 +113,17 @@ describe RJSON::Parser do
 
         # Don't use parse_json to allow mocks work
         described_class.parse_generic(data)
+      end
+
+      it 'proxies builder load_erros' do
+        begin
+          parse('__rjson_builder' => 'rjson/unknown_builder')
+        rescue => e
+          expect(e).to be_a(RJSON::ObjectLoadError)
+          expect(e.original_error).to be_a(NameError)
+        else
+          raise 'no error throwed'
+        end
       end
     end
   end

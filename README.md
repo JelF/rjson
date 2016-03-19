@@ -1,6 +1,8 @@
 # RJSON
 
-RJSON describes RJSON (Ruby JSON) serializer and RJSON format.
+RJSON describes RJSON (Ruby JSON) serializer and RJSON format.  
+_IMPORTANT NOTE ABOUT SECURITY_:
+RJSON parsing is insecure, you should parse only data you dumped yourself.
 
 The desiarilzation rules are simple:
 
@@ -9,7 +11,7 @@ Array always stays array
 
 ## String
 
-There are controll sequenence prefixes, allowed at start of string,
+There are control sequence prefixes, allowed at start of string,
 to describe it's ruby type
 
 `"foo"` is a string `"foo"`
@@ -17,6 +19,9 @@ to describe it's ruby type
 `"%:foo"` is a string `":foo"`
 `"%%foo"` is a string `"%foo"`
 `"a%foo"` is a string `"a%foo"`, because % is not at the start of string
+`'!"foo"'` is a string `"foo"`, which is coded by `"foo"` nested json
+`'!{"foo": 123}'` is a hash `{ "foo" => 123 }`
+`'%!"foo"'` is a string `'!"foo"'`
 
 ## Hash
 
@@ -36,14 +41,28 @@ where options are private keys with prefix removed and data is the rest
 ## RSON::ObjectBuilder
 
 `RJSON::ObjectBuilder` is the default builder. Serialization build it
-It requires `__rjson_class` parameter, and creates an instance of
-`__rjson_class`, threating all keys as ivars  
+It requires `__rjson_class_name` parameter, and creates an instance of
+`__rjson_class_name`, threating all keys as ivars  
 If there is a key, not begining with `@` it raises an error  
 If there is a key, begining with `@@` it raises an error  
 
 
 ## Back compatibility with YAML
 
-It is 100% back compatible, except YAML stores hash with `__rjson_` prefix
-To provided it, JSON is red by YAML loader, which is 100%
+It is 100% back compatible, except YAML stores hashes with keys with our
+prefixes. To provided it, JSON is red by YAML loader, which is 100%
 back-compatible with JSON. If generic object found, nothing would be done
+
+## Contributing
+
+* _Optional: read other issues, including closed_
+* Make an issue, describing what you want to do and wait me (JelF),
+or contact me in other way  
+* [.rubocop.yml] contains not only rules for linter, but for humans too,
+please check it before you start  
+* Fork it  
+* Make a branch  
+* Make a pull request  
+
+Or simply describe all you want me to do inside an issue,
+this would also be helpful

@@ -38,6 +38,7 @@ module RJSON
       case raw_string[0]
       when ':' then raw_string[1..-1].to_sym
       when '%' then raw_string[1..-1]
+      when '!' then parse_json(raw_string[1..-1])
       else raw_string
       end
     end
@@ -51,7 +52,8 @@ module RJSON
       builder = options.delete(:builder)
 
       if builder
-        builder.camelize.constantize.new(options).build(data)
+        ObjectLoadError.secure_constantize(builder.camelize)
+                       .new(options).build(data)
       else
         PrivateKeysNotUsed.try_raise(options, raw_hash)
         data
