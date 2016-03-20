@@ -29,6 +29,7 @@ describe 'serialziing does not change' do
     expect_intactness(1 + 5i)
     expect_intactness(1.2 + 5.6i)
     expect_intactness(124412412412345123412.214321 + 5.24125412512353252353251i)
+    expect_intactness(124412412412345123412.214321 + 1i / 3)
   end
 
   specify Rational do

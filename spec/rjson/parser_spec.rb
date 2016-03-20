@@ -95,8 +95,7 @@ describe RJSON::Parser do
       let(:builder) { double(:builder) }
       let(:builder_string) do
         ''.tap do |builder_string|
-          allow(builder_string).to(receive_message_chain('camelize.constantize')
-                                     .and_return(builder))
+          allow(builder_string).to receive(:constantize).and_return(builder)
         end
       end
 
@@ -115,12 +114,23 @@ describe RJSON::Parser do
         described_class.parse_generic(data)
       end
 
-      it 'proxies builder load_erros' do
+      it 'proxies builder load erros' do
         begin
-          parse('__rjson_builder' => 'rjson/unknown_builder')
+          parse('__rjson_builder' => 'RJSON::UnknownBuilder')
         rescue => e
           expect(e).to be_a(RJSON::ObjectLoadError)
           expect(e.original_error).to be_a(NameError)
+        else
+          raise 'no error throwed'
+        end
+      end
+
+      it 'proxies builder argument errors' do
+        begin
+          parse('__rjson_builder' => 'RJSON::ObjectBuilder')
+        rescue => e
+          expect(e).to be_a(RJSON::ProxyError)
+          expect(e.original_error).to be_a(ArgumentError)
         else
           raise 'no error throwed'
         end

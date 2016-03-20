@@ -22,3 +22,21 @@ Style/NumericLiterals:
   #   be red
   Exclude:
     - spec/**/*
+
+Style/TrailingCommaInArguments:
+  # Use trailing comma, if call is like
+  # ```ruby
+  #   foo(
+  #     bar,
+  #     baz,
+  #   )
+  # ```
+  # But no when like
+  # ```ruby
+  #   foo(bar,
+  #       baz)
+  # ```
+  Enabled: false
+
+Style/Alias:
+  EnforcedStyle: prefer_alias_method
