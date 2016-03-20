@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
     RJSON describes RJSON (Ruby JSON) serializer and RJSON format.
   TXT
 
-  spec.homepage      = "https://github.com/JelF/rjson"
+  spec.homepage      = 'https://github.com/JelF/rjson'
   spec.require_paths = ['lib']
 
   spec.files =
@@ -29,8 +29,8 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.11'
   spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rubocop', '= 0.38.0'
-  spec.add_development_dependency 'rspec', '= 3.4'
+  spec.add_development_dependency 'rubocop', '~> 0.38.0'
+  spec.add_development_dependency 'rspec', '~> 3.4'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'yard'
   spec.add_development_dependency 'launchy'
