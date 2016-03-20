@@ -33,7 +33,7 @@ special keys are thrown inside a builder, defined by `__rjson_builder`
 API is  
 ```ruby
 builder = options.delete("builder")
-builder.camelize.constantize.new(options).build(data)
+builder.constantize.new(options).build(data)
 ```
 
 where options are private keys with prefix removed and data is the rest  
