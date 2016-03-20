@@ -13,13 +13,16 @@ Gem::Specification.new do |spec|
     RJSON describes RJSON (Ruby JSON) serializer and RJSON format.
   TXT
 
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage      = "https://github.com/JelF/rjson"
   spec.require_paths = ['lib']
 
   spec.files =
     `git ls-files -z`
     .split("\x0")
     .reject { |f| f.match(%r{^(test|spec|features)/}) }
+
+  spec.required_ruby_version = '~> 2.1'
+  spec.platform = 'ruby'
 
   spec.add_dependency 'memoist'
   spec.add_dependency 'activesupport'
