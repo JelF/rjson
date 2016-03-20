@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
     .split("\x0")
     .reject { |f| f.match(%r{^(test|spec|features)/}) }
 
-  spec.required_ruby_version = '~> 2.1'
+  spec.required_ruby_version = '~> 2.2'
   spec.platform = 'ruby'
 
   spec.add_dependency 'memoist'
