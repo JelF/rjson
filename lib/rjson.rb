@@ -23,6 +23,7 @@ module RJSON
     #   possibly, any correct rjson, json or even yaml string.
     # @raise [RJSON::ParseError]
     # @return generic object
+    # @return nil if json_string is also nil
     def from_json(json_string)
       Parser.parse_json(json_string)
     end

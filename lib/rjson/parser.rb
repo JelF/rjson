@@ -16,6 +16,7 @@ module RJSON
     # @param raw_json [String] JSON or YAML string
     # @raise [RJSON::ParseError]
     # @return loaded object
+    # @return nil if raw_json is also nil
     def parse_json(raw_json)
       parse_generic(load_json(raw_json))
     end
@@ -25,7 +26,9 @@ module RJSON
     # @param raw_json [String] JSON or YAML string
     # @raise [RJSON::YAMLParserError]
     # @return parsed RJSON data, mixed with YAML loaded objects
+    # @return nil if raw_json is also nil
     def load_json(raw_json)
+      return if raw_json.nil?
       YAML.load(raw_json)
     rescue => e
       YAMLParserError.wrap(e)
