@@ -56,7 +56,7 @@ module RJSON
     def self.secure_constantize(name)
       name.constantize
     rescue NameError => e
-      if e.name.in?(name.split('::'))
+      if e.name.to_s.in?(name.split('::'))
         raise new(e), e.message, caller(2)
       else
         raise(e)

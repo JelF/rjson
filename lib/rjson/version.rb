@@ -9,5 +9,5 @@ module RJSON
   # or '~> a.b.c' in case you don't
   # never use ' ~> a.b' or weaker, even if you have coverage and braveness
   # upgrading a or b requires stage testing
-  VERSION = '0.1.0.0'.freeze
+  VERSION = '0.1.1.0'.freeze
 end
