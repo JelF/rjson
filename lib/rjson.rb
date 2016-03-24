@@ -5,6 +5,7 @@ require 'rjson/errors'
 require 'rjson/parser'
 require 'rjson/dumpers'
 require 'rjson/builders'
+require 'rjson/coder_context'
 
 # ==RJSON
 # RJSON describes RJSON (Ruby JSON) serializer and RJSON format.
@@ -30,12 +31,19 @@ module RJSON
     alias_method :load, :from_json
 
     # Dumps generic object into a valid json string
-    # @param object
-    #   generic object
+    # @param object generic object
+    # @param context [RJONS::CoderContext] context in which dump will be made
     # @return [String] valid json string
-    def to_json(object)
-      Dumper.to_json(object)
+    def to_json(object, context = CoderContext.new)
+      Dumper.to_json(object, context)
     end
     alias_method :dump, :to_json
+
+    private
+
+    # Default context would be used
+    def null_context
+      CoderContext.new
+    end
   end
 end
