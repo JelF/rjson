@@ -47,3 +47,12 @@ module RJSON
     end
   end
 end
+
+# @see RJSON::CoderContext
+# RJSON function is RJSON::CoderContext.new alias
+# Usage: `serialize :column, RJSON(foo: :bar)`
+# @param hash [Hash] context coder would use
+# @return [RJSON::CoderContext]
+def RJSON(hash = {}) # rubocop:disable Style/MethodName
+  RJSON::CoderContext.new(hash)
+end
