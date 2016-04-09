@@ -71,4 +71,4 @@ namespace :doc do
   end
 end
 
-task default: %i(rubocop  doc:coverage spec:coverage)
+task default: %i(rubocop  doc:coverage spec)

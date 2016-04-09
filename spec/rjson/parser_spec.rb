@@ -103,7 +103,7 @@ describe RJSON::Parser do
         data = {
           '__rjson_builder' => builder_string,
           '__rjson_arg' => 'generic argument',
-          ':key' => '%:value'
+          ':key' => '%:value',
         }
 
         expect(builder).to(receive(:new).with(arg: 'generic argument')

@@ -41,7 +41,7 @@ module RJSON
       result = {
         String => method(:parse_string),
         Array => method(:parse_array),
-        Hash => method(:parse_hash)
+        Hash => method(:parse_hash),
       }
       result.default = -> (x) { x }
       result

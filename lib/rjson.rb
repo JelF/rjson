@@ -5,6 +5,7 @@ require 'rjson/errors'
 require 'rjson/parser'
 require 'rjson/dumpers'
 require 'rjson/builders'
+require 'rjson/coder_context'
 
 # ==RJSON
 # RJSON describes RJSON (Ruby JSON) serializer and RJSON format.
@@ -30,12 +31,30 @@ module RJSON
     alias_method :load, :from_json
 
     # Dumps generic object into a valid json string
-    # @param object
-    #   generic object
+    # @param object generic object
+    # @param context [RJONS::CoderContext] context in which dump will be made
+    # @param context [Hash] data from which context would be generated
     # @return [String] valid json string
-    def to_json(object)
-      Dumper.to_json(object)
+    def to_json(object, context = CoderContext.new)
+      context = CoderContext.new(context) if context.is_a?(Hash)
+      Dumper.to_json(object, context)
     end
     alias_method :dump, :to_json
+
+    private
+
+    # Default context would be used
+    def null_context
+      CoderContext.new
+    end
   end
+end
+
+# @see RJSON::CoderContext
+# RJSON function is RJSON::CoderContext.new alias
+# Usage: `serialize :column, RJSON(foo: :bar)`
+# @param hash [Hash] context coder would use
+# @return [RJSON::CoderContext]
+def RJSON(hash = {}) # rubocop:disable Style/MethodName
+  RJSON::CoderContext.new(hash)
 end
