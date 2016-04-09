@@ -46,7 +46,7 @@ describe 'custom builder' do
       RJSON.load(dumped)
     rescue RJSON::ProxyError => e
       expect(e.original_error).to be_an ArgumentError
-      expect(e.message).to match /missing keyword: option/
+      expect(e.message).to match(/missing keyword: option/)
     else
       raise 'no error thrown!'
     end
