@@ -91,7 +91,7 @@ module RJSON
       if object == Float::INFINITY
         {
           '__rjson_builder' => 'RJSON::ConstantLoader',
-          **dump_hash(name: 'Float::INFINITY')
+          **dump_hash(name: 'Float::INFINITY'),
         }
       else
         object
@@ -193,7 +193,7 @@ module RJSON
     def dump
       {
         '__rjson_builder' => 'RJSON::FunctionalBuilder',
-        **dump_hash(method: object.class.name, args: [object.to_s])
+        **dump_hash(method: object.class.name, args: [object.to_s]),
       }
     end
   end
@@ -222,7 +222,7 @@ module RJSON
       {
         '__rjson_builder' => 'RJSON::ObjectBuilder',
         '__rjson_class_name' => object.class.name,
-        **ivars
+        **ivars,
       }
     end
   end
@@ -242,7 +242,7 @@ module RJSON
 
     # Calls object#as_rjson
     def dump
-      object.as_rjson(object, context)
+      object.as_rjson(context)
     end
   end
 

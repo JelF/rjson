@@ -3,7 +3,7 @@ module RJSON
   # specific options. For example, you want to dump all AR records as global ids
   # so you specify CoderContext.new(ar_as_global_id: true)
   class CoderContext
-    delegate :[], :[]=, to: :data
+    delegate :fetch, :[], :[]=, to: :data
     delegate :load, to: RJSON
 
     # @param data [Hash]
@@ -22,6 +22,14 @@ module RJSON
     # @return [String] valid json string
     def dump(object)
       RJSON.dump(object, self)
+    end
+
+    # @see Dumper.dump
+    # Dumps generic object into an rjson object, used for nested objects
+    # @param object generic object
+    # @return rjson representation before JSON.dump called
+    def as_rjson(object)
+      Dumper.dump(object, self)
     end
 
     protected
