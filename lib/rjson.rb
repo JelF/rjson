@@ -33,8 +33,10 @@ module RJSON
     # Dumps generic object into a valid json string
     # @param object generic object
     # @param context [RJONS::CoderContext] context in which dump will be made
+    # @param context [Hash] data from which context would be generated
     # @return [String] valid json string
     def to_json(object, context = CoderContext.new)
+      context = CoderContext.new(context) if context.is_a?(Hash)
       Dumper.to_json(object, context)
     end
     alias_method :dump, :to_json
